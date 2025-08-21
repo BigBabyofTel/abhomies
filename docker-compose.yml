@@ -1,0 +1,44 @@
+name: abhomies
+services:
+  frontend:
+      build:
+        context: ./www
+        dockerfile: Dockerfile
+      ports:
+        - "3000:3000"
+      depends_on:
+        - backend
+      volumes:
+        - abhomies_fe_volume:/var/lib/postgresql/data
+      networks:
+        - abhomies
+  backend:
+      build:
+        context: ./api
+        dockerfile: Dockerfile
+      ports:
+        - "3001:3001"
+      environment:
+        - DATABASE_URL=${DATABASE_URL}
+      depends_on:
+        - db
+      volumes:
+        - abhomies_be_volume:/var/lib/postgresql/data
+      networks:
+        - abhomies
+  db:
+      image: postgres
+      environment:
+        - DATABASE_URL=${DATABASE_URL}
+      ports:
+      - '5432:5432'
+      volumes:
+      - abhomies_db_volume:/var/lib/postgresql/data
+      networks:
+      - abhomies
+volumes:
+  abhomies_fe_volume:
+  abhomies_be_volume:
+  abhomies_db_volume:
+networks:
+  abhomies:

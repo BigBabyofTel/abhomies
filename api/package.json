@@ -2,8 +2,9 @@
   "name": "auth_hono",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "generate-tables" : "bun run drizzle-kit generate",
-    "run-migration": "bun run drizzle-kit migrate"
+    "db-gen" : "bun run drizzle-kit generate",
+    "db-mig": "bun run drizzle-kit migrate",
+    "db-push": "bun run drizzle-kit push"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.7",
