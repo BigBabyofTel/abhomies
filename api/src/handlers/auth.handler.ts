@@ -14,14 +14,20 @@ export const register = async (c: Context) => {
 };
 
 export const login = async (c: Context) => {
-  const { email, password } = await c.req.json();
+
+
 
   try {
+    const { email, password } = await c.req.json();
     const user = await us.login(email, password);
     return c.json(user, 200);
   } catch (error) {
+    console.log(error)
     return c.json({ error: 'Invalid email or password' }, 400);
   }
+
+
+
 };
 
 export const refresh = async (c: Context) => {

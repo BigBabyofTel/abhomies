@@ -13,7 +13,7 @@ export default function SignIn() {
   });
 
   function onSubmit(data: SignInForm) {
-    signIn(data);
+    return signIn(data);
   }
 
   return (

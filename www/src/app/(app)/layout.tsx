@@ -14,8 +14,8 @@ async function getSession(): Promise<User | undefined> {
   }
 
   try {
-    const res = ky
-      .get('http://localhost:8070/session', {
+    const res = await ky
+      .get('http://abhomies-backend-1:8070/session', {
         headers: {
           Authorization: `Bearer ${accesToken.value}`,
         },
@@ -24,11 +24,22 @@ async function getSession(): Promise<User | undefined> {
 
     return res;
   } catch (error) {
-    console.error(error);
+    console.error('Session error:', error);
+    // Clear invalid cookies
+    cookieStore.delete('ACCESS_TOKEN');
+    cookieStore.delete('REFRESH_TOKEN');
+    // If token is invalid/expired, redirect to sign-in
+    redirect('/sign-in');
   }
 }
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const user = await getSession();
   console.log(user);
-  return <SessionProvider user={user!}>{children}</SessionProvider>;
+  
+  // This should never happen because getSession redirects if no user
+  if (!user) {
+    redirect('/sign-in');
+  }
+  
+  return <SessionProvider user={user}>{children}</SessionProvider>;
 }

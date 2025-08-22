@@ -18,7 +18,7 @@ type SignUpForm = z.infer<typeof signUpForm>;
 
 async function signUp(data: SignUpForm): Promise<User> {
   return await ky
-    .post('http://localhost:8070/register', {
+    .post('http://abhomies-backend-1:8070/register', {
       json: data,
     })
     .json<User>();

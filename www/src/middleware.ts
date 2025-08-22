@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   if (!access_token) {
     try {
       const res = await ky
-        .post('http://localhost:8070/refresh', {
+        .post('http://abhomies-backend-1:8070/refresh', {
           json: {
             refresh_token: refresh_token.value,
           },
