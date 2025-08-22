@@ -8,7 +8,10 @@ export async function middleware(request: NextRequest) {
   const refresh_token = request.cookies.get('REFRESH_TOKEN');
 
   if (!refresh_token) {
-    return NextResponse.redirect('/sign-in');
+    const url = request.nextUrl.clone();
+    url.pathname = '/sign-in';
+    const redirect = url.toString();
+    return NextResponse.redirect(redirect);
   }
 
   if (!access_token) {

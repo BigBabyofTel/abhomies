@@ -8,6 +8,7 @@ export const register = async (c: Context) => {
     const user = await us.insert_user(data);
     return c.json(user, 201);
   } catch (error) {
+    console.log(error)
     return c.json({ error: 'Invalid data' }, 400);
   }
 };
